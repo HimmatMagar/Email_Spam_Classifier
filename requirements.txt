@@ -6,7 +6,7 @@ fastapi[standard]
 uvicorn
 pydantic
 scikit-learn
-tensorflow
+emoji
 python-box
 ensure
 pyYAML

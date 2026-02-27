@@ -5,3 +5,8 @@ data_ingestion:
   data_path:
   zip_file: artifact/data_ingestion/data.zip
   unzip_file: artifact/data_ingestion
+
+data_validation:
+  root_dir: artifact/data_validation
+  data_path:
+  status_file: artifact/data_validation/status.txt

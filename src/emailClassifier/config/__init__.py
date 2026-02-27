@@ -1,7 +1,6 @@
 from src.emailClassifier.utils import *
 from src.emailClassifier.constants import *
-from src.emailClassifier.entity import DataIngestionConfig
-
+from src.emailClassifier.entity import *
 
 
 class ConfigurationManager:
@@ -25,3 +24,17 @@ class ConfigurationManager:
             )
 
             return data_ingestion_config
+      
+
+      def get_data_validation_config(self) -> DataValidationConfig:
+            config = self.config.data_validation
+            create_dir([config.root_dir])
+
+            data_validation_config = DataValidationConfig(
+                  root_dir= config.root_dir,
+                  data_path=config.data_path,
+                  status_file=config.status_file,
+                  schema=self.schema.COLUMN
+            )
+
+            return data_validation_config

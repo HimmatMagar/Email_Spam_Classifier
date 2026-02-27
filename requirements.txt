@@ -11,5 +11,5 @@ python-box
 ensure
 pyYAML
 notebook
-spacy
+nltk
 -e .

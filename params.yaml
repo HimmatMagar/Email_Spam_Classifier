@@ -1,0 +1,4 @@
+SVC:
+  C: 1
+  kernel: "linear"
+  gamma: "scale"

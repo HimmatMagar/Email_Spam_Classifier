@@ -1,0 +1,7 @@
+artifact_root: artifact
+
+data_ingestion:
+  root_dir: artifact/data_ingestion
+  data_path:
+  zip_file: artifact/data_ingestion/data.zip
+  unzip_file: artifact/data_ingestion

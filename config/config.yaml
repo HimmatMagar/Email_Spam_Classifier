@@ -10,3 +10,7 @@ data_validation:
   root_dir: artifact/data_validation
   data_path: artifact/data_ingestion/combined_data.csv
   status_file: artifact/data_validation/status.txt
+
+data_transformation:
+  root_dir: artifact/data_transformation
+  data_path: artifact/data_ingestion/combined_data.csv

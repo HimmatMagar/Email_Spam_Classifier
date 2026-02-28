@@ -10,6 +10,11 @@ __pycache__/
 ### Data file
 artifact/data_ingestion/
 
+artifact/
+*.pkl
+*.csv
+*.zip
+
 # Distribution / packaging
 .Python
 build/

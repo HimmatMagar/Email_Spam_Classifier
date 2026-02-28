@@ -1,7 +1,7 @@
 import os
 import yaml
 import json
-import pickle
+import joblib
 from pathlib import Path
 from box.config_box import ConfigBox
 from src.emailClassifier import loger
@@ -35,7 +35,7 @@ def create_dir(file_path: list, verbose = True):
 def load_file(file_path: Path):
       try:
             with open(file_path, 'rb') as f:
-                  data = pickle.load(f)
+                  data = joblib.load(f)
                   loger.info(f"Pickle file {file_path} loaded successfully")
                   return data
       except BoxValueError:

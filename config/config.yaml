@@ -14,3 +14,9 @@ data_validation:
 data_transformation:
   root_dir: artifact/data_transformation
   data_path: artifact/data_ingestion/combined_data.csv
+
+model_building:
+  root_dir: artifact/build_model
+  xtrain_data: artifact/data_transformation/x_train.pkl
+  ytrain_data: artifact/data_transformation/y_train.pkl
+  model: model.pkl

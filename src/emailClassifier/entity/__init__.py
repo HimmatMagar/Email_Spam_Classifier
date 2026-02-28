@@ -20,3 +20,15 @@ class DataValidationConfig:
 class DataTransformationConfig:
       root_dir: Path
       data_path: Path
+
+
+@dataclass(frozen=True)
+class ModelBuilingConfig:
+      root_dir: Path
+      xtrain_data: Path
+      ytrain_data: Path
+      model: str
+      C: int
+      kernel: str
+      gamma: str
+

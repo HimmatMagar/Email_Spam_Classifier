@@ -52,3 +52,21 @@ class ConfigurationManager:
             )
 
             return data_transformation_config
+
+      def get_model_building_config(self) -> ModelBuilingConfig:
+            config = self.config.model_building
+
+            create_dir([config.root_dir])
+            params = self.params.SVC
+
+            model_building_config = ModelBuilingConfig(
+                  root_dir = config.root_dir,
+                  xtrain_data = config.xtrain_data,
+                  ytrain_data = config.ytrain_data,
+                  model = config.model,
+                  C = params.C,
+                  kernel = params.kernel,
+                  gamma = params.gamma
+            )
+
+            return model_building_config

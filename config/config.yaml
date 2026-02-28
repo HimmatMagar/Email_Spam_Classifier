@@ -2,6 +2,11 @@ artifact_root: artifact
 
 data_ingestion:
   root_dir: artifact/data_ingestion
-  data_path:
+  data_path: "https://drive.google.com/uc?export=download&id=1OPoYRR_GjdedXQrBiRzV0wPQaNCPmm0I"
   zip_file: artifact/data_ingestion/data.zip
   unzip_file: artifact/data_ingestion
+
+data_validation:
+  root_dir: artifact/data_validation
+  data_path: artifact/data_ingestion/combined_data.csv
+  status_file: artifact/data_validation/status.txt

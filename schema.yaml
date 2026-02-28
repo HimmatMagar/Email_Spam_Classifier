@@ -1,1 +1,6 @@
-key: value
+COLUMN:
+  label: [int, str]
+  text: str
+
+TARGET:
+  name: text

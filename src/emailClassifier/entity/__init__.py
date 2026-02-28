@@ -16,6 +16,7 @@ class DataValidationConfig:
       status_file: str
       schema: dict
 
+
 @dataclass(frozen=True)
 class DataTransformationConfig:
       root_dir: Path
@@ -32,3 +33,11 @@ class ModelBuilingConfig:
       kernel: str
       gamma: str
 
+
+@dataclass(frozen=True)
+class ModelEvalConfig:
+      root_dir: Path
+      xval_file: Path
+      yval_file: Path
+      model: Path
+      metric: Path

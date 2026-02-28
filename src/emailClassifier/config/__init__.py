@@ -70,3 +70,18 @@ class ConfigurationManager:
             )
 
             return model_building_config
+      
+
+      def get_model_eval_config(self) -> ModelEvalConfig:
+            config = self.config.model_evaluation
+            create_dir([config.root_dir])
+
+            model_eval_config = ModelEvalConfig(
+                  root_dir = config.root_dir,
+                  xval_file = config.xval_data,
+                  yval_file = config.yval_data,
+                  model = config.model,
+                  metric = config.metric_file,
+            )
+
+            return model_eval_config

@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>📧 Spam or Ham? · simple classifier</title>
+      <style>
+            * {
+                  box-sizing: border-box;
+                  margin: 0;
+            }
+
+            body {
+                  background: #f5f7fb;
+                  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  min-height: 100vh;
+                  margin: 0;
+                  padding: 1rem;
+            }
+
+            .card {
+                  max-width: 680px;
+                  width: 100%;
+                  background: white;
+                  border-radius: 32px;
+                  box-shadow: 0 20px 35px -8px rgba(0, 10, 30, 0.15), 0 4px 8px rgba(0, 0, 0, 0.02);
+                  padding: 2rem 2rem 2.5rem;
+                  transition: all 0.2s ease;
+            }
+
+            h1 {
+                  font-size: 2rem;
+                  font-weight: 600;
+                  letter-spacing: -0.02em;
+                  display: flex;
+                  align-items: center;
+                  gap: 10px;
+                  margin-bottom: 0.25rem;
+                  color: #1e293b;
+            }
+
+            h1 span {
+                  background: #eef2ff;
+                  color: #4f46e5;
+                  font-size: 1rem;
+                  font-weight: 500;
+                  padding: 0.2rem 0.8rem;
+                  border-radius: 40px;
+                  margin-left: 0.5rem;
+            }
+
+            .subhead {
+                  color: #64748b;
+                  font-size: 0.95rem;
+                  margin-bottom: 2rem;
+                  border-left: 3px solid #cbd5e1;
+                  padding-left: 1rem;
+            }
+
+            /* text field */
+            .email-box {
+                  margin-bottom: 1.8rem;
+            }
+
+            label {
+                  font-size: 0.9rem;
+                  font-weight: 500;
+                  color: #334155;
+                  display: block;
+                  margin-bottom: 0.5rem;
+            }
+
+            textarea {
+                  width: 100%;
+                  border: 1.5px solid #e2e8f0;
+                  border-radius: 24px;
+                  padding: 1.2rem 1.5rem;
+                  font-family: inherit;
+                  font-size: 1rem;
+                  line-height: 1.5;
+                  background: #fafcff;
+                  resize: vertical;
+                  min-height: 160px;
+                  transition: 0.15s;
+                  outline: none;
+                  color: #0f172a;
+            }
+
+            textarea:focus {
+                  border-color: #818cf8;
+                  box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.12);
+                  background: white;
+            }
+
+            textarea::placeholder {
+                  color: #a0aec0;
+                  font-weight: 300;
+                  font-size: 0.95rem;
+            }
+
+            /* action row */
+            .action-row {
+                  display: flex;
+                  flex-wrap: wrap;
+                  align-items: center;
+                  gap: 1rem;
+                  margin-bottom: 2rem;
+            }
+
+            .classify-btn {
+                  background: #4f46e5;
+                  border: none;
+                  color: white;
+                  font-weight: 500;
+                  font-size: 1.1rem;
+                  padding: 0.8rem 2.2rem;
+                  border-radius: 40px;
+                  display: inline-flex;
+                  align-items: center;
+                  gap: 10px;
+                  cursor: pointer;
+                  box-shadow: 0 8px 18px -6px rgba(79, 70, 229, 0.4);
+                  transition: 0.15s;
+                  border: 1px solid rgba(255, 255, 255, 0.1);
+            }
+
+            .classify-btn:hover {
+                  background: #6366f1;
+                  transform: scale(1.02);
+                  box-shadow: 0 12px 22px -8px #4f46e5;
+            }
+
+            .classify-btn:active {
+                  background: #4338ca;
+                  transform: scale(0.98);
+                  box-shadow: 0 5px 12px -4px #4f46e5;
+            }
+
+            .reset-btn {
+                  background: transparent;
+                  border: 1.5px solid #e2e8f0;
+                  color: #475569;
+                  font-size: 0.95rem;
+                  padding: 0.6rem 1.5rem;
+                  border-radius: 40px;
+                  cursor: pointer;
+                  transition: 0.1s;
+                  font-weight: 450;
+            }
+
+            .reset-btn:hover {
+                  background: #f1f5f9;
+                  border-color: #94a3b8;
+            }
+
+            /* result chip */
+            .result-area {
+                  background: #f8fafc;
+                  border-radius: 60px;
+                  padding: 0.5rem 0.5rem 0.5rem 2rem;
+                  display: flex;
+                  align-items: center;
+                  justify-content: space-between;
+                  border: 1px solid #e9eef3;
+                  margin-top: 0.5rem;
+            }
+
+            .result-label {
+                  font-weight: 500;
+                  color: #334155;
+                  font-size: 0.95rem;
+                  letter-spacing: 0.3px;
+            }
+
+            .verdict {
+                  background: #e9eef3;
+                  border-radius: 40px;
+                  padding: 0.5rem 2rem;
+                  font-weight: 600;
+                  font-size: 1.2rem;
+                  min-width: 110px;
+                  text-align: center;
+                  color: #1e293b;
+                  transition: 0.2s;
+                  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.02);
+            }
+
+            .verdict.spam {
+                  background: #fee2e2;
+                  color: #b91c1c;
+            }
+
+            .verdict.not-spam {
+                  background: #dcfce7;
+                  color: #166534;
+            }
+
+            .verdict.neutral {
+                  background: #f1f5f9;
+                  color: #4b5563;
+            }
+
+            /* tiny footer */
+            .disclaimer {
+                  font-size: 0.8rem;
+                  color: #94a3b8;
+                  margin-top: 2rem;
+                  text-align: center;
+                  border-top: 1px dashed #d1d9e6;
+                  padding-top: 1.5rem;
+            }
+
+            .disclaimer strong {
+                  color: #475569;
+                  font-weight: 500;
+            }
+      </style>
+</head>
+
+<body>
+      <div class="card">
+            <h1>
+                  📬 Email Classifier
+                  <span>spam? or not?</span>
+            </h1>
+            <div class="subhead">paste any email message — instant vibe check</div>
+
+            <!-- main input -->
+            <div class="email-box">
+                  <label for="emailContent">✍️ Email content</label>
+                  <textarea id="emailContent"
+                        placeholder="e.g. &quot;Congratulations, you've won a free iPhone! Click here...&quot; or &quot;Hey, let's grab lunch tomorrow&quot;">Congratulations! You are the lucky winner of a $1000 gift card. Click the link to claim now.</textarea>
+            </div>
+
+            <!-- buttons -->
+            <div class="action-row">
+                  <button class="classify-btn" id="classifyBtn">
+                        <span>🔍</span> Classify
+                  </button>
+                  <button class="reset-btn" id="resetBtn">↺ clear</button>
+            </div>
+
+            <!-- result display -->
+            <div class="result-area">
+                  <span class="result-label">📌 verdict</span>
+                  <div class="verdict neutral" id="verdictDisplay">—</div>
+            </div>
+
+            <!-- <div class="disclaimer">
+                  <strong>⚡ simple demo</strong> — uses basic keyword rules, not real AI.
+            </div> -->
+      </div>
+
+      <script>
+            (function () {
+                  // ----- simple rule‑based classification (spam / not spam) -----
+                  function classifyEmail(text) {
+                        if (!text || text.trim() === '') return 'neutral';   // empty input
+
+                        const lower = text.toLowerCase();
+
+                        // spammy keyword list (common in spammy messages)
+                        const spamIndicators = [
+                              'win', 'winner', 'won', 'congratulation', 'free', 'prize', 'gift card',
+                              'claim', 'click here', 'limited time', 'act now', 'million dollars',
+                              'earn money', 'work from home', 'extra cash', 'viagra', 'bitcoin',
+                              'investment', 'lottery', 'selected', 'promotion', 'bonus',
+                              'urgent', 'verify your account', 'suspended', 'irs', 'bank alert',
+                              'inheritance', 'prince', 'nigerian', 'dear sir', 'dear madam',
+                              '%', 'discount', 'buy now', 'subscribe', 'trial', 'expire', 'risk-free',
+                              'guarantee', 'cash', 'award', 'click below', 'unlimited', 'wholesale',
+                              'medication', 'pharmacy', 'prescription', 'refund', 'paypal', 'confirm'
+                        ];
+
+                        // strong spam indicators get extra weight, but we keep it simple
+                        const threshold = 2;   // at least 2 spam flags -> spam
+
+                        let matches = 0;
+                        for (let keyword of spamIndicators) {
+                              if (lower.includes(keyword)) {
+                                    matches++;
+                              }
+                        }
+
+                        // also flag excessive use of $$$, !!!, or all caps (heuristic)
+                        if ((text.match(/\$/g) || []).length > 1) matches += 1;
+                        if ((text.match(/!/g) || []).length > 2) matches += 1;
+                        if (text.length > 10 && text === text.toUpperCase()) matches += 1;  // SHOUTING
+                        if ((text.match(/\d{5,}/g)) !== null) matches += 1;   // long numbers (zip codes etc, often in spam)
+
+                        // additional suspicious patterns
+                        const urlCount = (lower.match(/https?:\/\//g) || []).length;
+                        if (urlCount >= 2) matches += 1;        // multiple links
+                        if (lower.includes('bit.ly') || lower.includes('tinyurl') || lower.includes('shorturl')) matches += 2;  // link shorteners are spam‑adjacent
+
+                        return matches >= threshold ? 'spam' : 'not-spam';
+                  }
+
+                  // ----- UI elements -----
+                  const textarea = document.getElementById('emailContent');
+                  const classifyBtn = document.getElementById('classifyBtn');
+                  const resetBtn = document.getElementById('resetBtn');
+                  const verdictEl = document.getElementById('verdictDisplay');
+
+                  // helper to update the verdict bubble
+                  function setVerdict(type, label = null) {
+                        // remove previous classes
+                        verdictEl.classList.remove('spam', 'not-spam', 'neutral');
+
+                        if (type === 'spam') {
+                              verdictEl.classList.add('spam');
+                              verdictEl.textContent = '🚨 SPAM';
+                        } else if (type === 'not-spam') {
+                              verdictEl.classList.add('not-spam');
+                              verdictEl.textContent = '✅ NOT SPAM';
+                        } else if (type === 'loading') {
+                              verdictEl.classList.add('neutral');
+                              verdictEl.textContent = '⏳ classifying...';
+                        } else {
+                              verdictEl.classList.add('neutral');
+                              verdictEl.textContent = '—';
+                        }
+                  }
+
+                  // call FastAPI endpoint
+                  async function runClassification() {
+                        const content = textarea.value.trim();
+
+                        if (!content) {
+                              setVerdict('neutral');
+                              return;
+                        }
+
+                        // show loading state
+                        setVerdict('loading');
+                        classifyBtn.disabled = true;
+                        classifyBtn.style.opacity = '0.6';
+
+                        try {
+                              const response = await fetch('http://127.0.0.1:8000/predict', {
+                                    method: 'POST',
+                                    headers: {
+                                          'Content-Type': 'application/json'
+                                    },
+                                    body: JSON.stringify({
+                                          text: content
+                                    })
+                              });
+
+                              if (!response.ok) {
+                                    throw new Error(`API error: ${response.status}`);
+                              }
+
+                              const data = await response.json();
+
+                              // data contains: prediction (0 or 1), label (spam or not spam), status
+                              const verdict = data.label === 'spam' ? 'spam' : 'not-spam';
+                              setVerdict(verdict);
+
+                        } catch (error) {
+                              console.error('Classification error:', error);
+                              verdictEl.classList.add('neutral');
+                              verdictEl.textContent = '❌ Error - check connection';
+                        } finally {
+                              classifyBtn.disabled = false;
+                              classifyBtn.style.opacity = '1';
+                        }
+                  }
+
+                  // reset: clear field and reset verdict
+                  function resetForm() {
+                        textarea.value = '';
+                        setVerdict('neutral');
+                        textarea.focus();
+                  }
+
+                  // attach listeners
+                  classifyBtn.addEventListener('click', runClassification);
+                  resetBtn.addEventListener('click', resetForm);
+
+                  // hit Enter in textarea? we don't want accidental classification,
+                  // but Ctrl+Enter could be nice – we'll add a little shortcut:
+                  textarea.addEventListener('keydown', (e) => {
+                        if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+                              e.preventDefault();  // avoid newline + classify
+                              runClassification();
+                        }
+                  });
+
+                  // initialize
+                  window.addEventListener('DOMContentLoaded', () => {
+                        setVerdict('neutral');
+                  });
+            })();
+      </script>
+</body>
+
+</html>

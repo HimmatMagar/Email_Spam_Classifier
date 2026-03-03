@@ -57,6 +57,11 @@ class DataTransform:
             tfidf_matrix = tfidf_vectorizer.fit_transform(df['text'])
             y = df['label']
 
+            # Save the vectorizer to pkl file
+            vectorizer_path = os.path.join(self.config.root_dir, "vectorizer.pkl")
+            joblib.dump(tfidf_vectorizer, vectorizer_path)
+            loger.info(f"Vectorizer saved to {vectorizer_path}")
+
             return tfidf_matrix, y
       
 

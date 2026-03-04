@@ -34,6 +34,9 @@ class PredictionPipeline:
             # Apply emoji conversion
             df['text'] = df['text'].apply(emojis_to_text)
 
+            # Remove extra blank lines/newlines between sentences
+            df['text'] = df['text'].str.replace(r'\n+', ' ', regex=True)
+
             # Remove punctuation
             df['text'] = df['text'].str.replace(r'[^\w\s]', '', regex=True)
 

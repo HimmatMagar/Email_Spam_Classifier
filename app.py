@@ -34,12 +34,7 @@ async def predict_spam_email(UserInput: Input):
       data = pd.DataFrame([{
             'text': UserInput.text
       }])
-
-      transformed_data = predict_pipe.transform_user_data(data)
-
-      vectorized_data = predict_pipe.vectorize_data(transformed_data)
-
-      prediction = predict_pipe.predict_spam(vectorized_data)
+      prediction = predict_pipe.predict_spam(data['text'][0])
 
       return {
             "prediction": prediction,

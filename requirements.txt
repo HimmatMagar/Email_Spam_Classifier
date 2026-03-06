@@ -12,4 +12,5 @@ ensure
 pyYAML
 notebook
 nltk
+gdown
 -e .

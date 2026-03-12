@@ -1,6 +1,6 @@
-from src.emailClassifier import loger
-from src.emailClassifier.config import ConfigurationManager
-from src.emailClassifier.components.model_build import BuildModel
+from emailClassifier import loger
+from emailClassifier.config import ConfigurationManager
+from emailClassifier.components.model_build import BuildModel
 
 STAGE_NAME = "Model Building Stage"
 

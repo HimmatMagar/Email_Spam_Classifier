@@ -1,6 +1,6 @@
-from src.emailClassifier.utils import *
-from src.emailClassifier.constants import *
-from src.emailClassifier.entity import *
+from emailClassifier.utils import *
+from emailClassifier.constants import *
+from emailClassifier.entity import *
 
 
 class ConfigurationManager:

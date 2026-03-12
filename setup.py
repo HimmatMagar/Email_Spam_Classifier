@@ -12,11 +12,11 @@ SRC_REPO = "emailClassifier"
 AUTHOR_EMAIL = "himmatmagar007@gmail.com"
 
 setuptools.setup(
-      name="Email Classifier",
+      name="emailClassifier",
       version=__version__,
       author=AUTHOR_USER_NAME,
       author_email=AUTHOR_EMAIL,
-      description="End to End Deep Learning implementation for Email Classifier",
+      description="End to End ML Learning implementation for Email Classifier",
       long_description=descriptions,
       long_description_content_type='text/markdown',
       url=f"https://github.com/{AUTHOR_USER_NAME}/{REPO_NAME}",

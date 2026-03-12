@@ -27,3 +27,7 @@ model_evaluation:
   yval_data: artifact/data_transformation/y_val.pkl
   model: artifact/build_model/model.pkl
   metric_file: artifact/model_evaluation/mertic.json
+
+
+mlflow:
+  mlflow_url: "https://dagshub.com/HimmatMagar/Email_Spam_Classifier.mlflow"

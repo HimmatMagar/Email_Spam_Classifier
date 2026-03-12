@@ -1,13 +1,13 @@
 import os
 import joblib
 import pandas as pd
-from src.emailClassifier import loger
-from src.emailClassifier.utils import *
+from emailClassifier import loger
+from emailClassifier.utils import *
 from sklearn.pipeline import Pipeline
 from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import TfidfVectorizer
 from emailClassifier.utils.text_cleaner import TextCleaner
-from src.emailClassifier.entity import DataTransformationConfig
+from emailClassifier.entity import DataTransformationConfig
 
 
 class DataTransform:

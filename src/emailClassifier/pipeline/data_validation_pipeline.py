@@ -1,6 +1,6 @@
-from src.emailClassifier import loger
-from src.emailClassifier.config import ConfigurationManager
-from src.emailClassifier.components.data_validation import DataValidation
+from emailClassifier import loger
+from emailClassifier.config import ConfigurationManager
+from emailClassifier.components.data_validation import DataValidation
 
 STAGE_NAME = "Data Validation Config"
 

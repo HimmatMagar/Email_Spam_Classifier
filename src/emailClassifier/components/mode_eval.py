@@ -1,10 +1,10 @@
 import joblib
 from pathlib import Path
 from box.config_box import ConfigBox
-from src.emailClassifier import loger
-from src.emailClassifier.utils import *
+from emailClassifier import loger
+from emailClassifier.utils import *
 from sklearn.metrics import classification_report
-from src.emailClassifier.entity import ModelEvalConfig
+from emailClassifier.entity import ModelEvalConfig
 
 
 

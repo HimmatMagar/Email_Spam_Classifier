@@ -1,0 +1,131 @@
+schema: '2.0'
+stages:
+  data_ingestion:
+    cmd: python src/emailClassifier/pipeline/data_ingestion_pipeline.py
+    deps:
+    - path: config/config.yaml
+      hash: md5
+      md5: ff9848b98d8533891fb2a00226ee6e8b
+      size: 1088
+    - path: src/emailClassifier/components/data_ingestion.py
+      hash: md5
+      md5: 9cd8fe3714334e28111d8ff54c372392
+      size: 1016
+    outs:
+    - path: artifact/data_ingestion/combined_data.csv
+      hash: md5
+      md5: 544e3dc00840bac4ea1aa8c7ca744f13
+      size: 139910068
+  data_validation:
+    cmd: python src/emailClassifier/pipeline/data_validation_pipeline.py
+    deps:
+    - path: artifact/data_ingestion/combined_data.csv
+      hash: md5
+      md5: 544e3dc00840bac4ea1aa8c7ca744f13
+      size: 139910068
+    - path: config/config.yaml
+      hash: md5
+      md5: ff9848b98d8533891fb2a00226ee6e8b
+      size: 1088
+    - path: src/emailClassifier/components/data_validation.py
+      hash: md5
+      md5: 1d970dc74dce5b1a212d91178b8e5510
+      size: 1194
+    outs:
+    - path: artifact/data_validation/status.txt
+      hash: md5
+      md5: c5aff53158692e0817a3632881347e7b
+      size: 23
+  data_transformation:
+    cmd: python src/emailClassifier/pipeline/data_transform_pipeline.py
+    deps:
+    - path: artifact/data_ingestion/combined_data.csv
+      hash: md5
+      md5: 544e3dc00840bac4ea1aa8c7ca744f13
+      size: 139910068
+    - path: config/config.yaml
+      hash: md5
+      md5: ff9848b98d8533891fb2a00226ee6e8b
+      size: 1088
+    - path: src/emailClassifier/components/data_transformation.py
+      hash: md5
+      md5: ad1628fc40daffb2933ad897b0fd8527
+      size: 1945
+    outs:
+    - path: artifact/data_transformation/vectorizer.pkl
+      hash: md5
+      md5: 57cd97d917a8ec42c2de95ebf819cea1
+      size: 44308
+    - path: artifact/data_transformation/x_train.pkl
+      hash: md5
+      md5: 46051cf891ca2cae4ff13a76545394a4
+      size: 32930467
+    - path: artifact/data_transformation/x_val.pkl
+      hash: md5
+      md5: 9f3db6762450cb331d4542b2ad0d03c5
+      size: 8238123
+    - path: artifact/data_transformation/y_train.pkl
+      hash: md5
+      md5: d7b6d7d5319e5e06512ab14197cb8e56
+      size: 2137074
+    - path: artifact/data_transformation/y_val.pkl
+      hash: md5
+      md5: f05645d37ecb5d8970b1cf6566e760d6
+      size: 534880
+  model_building:
+    cmd: python src/emailClassifier/pipeline/model_build_pipeline.py
+    deps:
+    - path: artifact/data_transformation/x_train.pkl
+      hash: md5
+      md5: 46051cf891ca2cae4ff13a76545394a4
+      size: 32930467
+    - path: artifact/data_transformation/y_train.pkl
+      hash: md5
+      md5: d7b6d7d5319e5e06512ab14197cb8e56
+      size: 2137074
+    - path: config/config.yaml
+      hash: md5
+      md5: ff9848b98d8533891fb2a00226ee6e8b
+      size: 1088
+    - path: src/emailClassifier/components/model_build.py
+      hash: md5
+      md5: f22fbf566de0e7c7701d3df9949da4f6
+      size: 981
+    params:
+      params.yaml:
+        SVC.C: 1
+        SVC.gamma: scale
+        SVC.kernel: linear
+    outs:
+    - path: artifact/build_model/model.pkl
+      hash: md5
+      md5: cbfcb274d20602d342fe6da4b7a00bc2
+      size: 3479115
+  model_evaluation:
+    cmd: python src/emailClassifier/pipeline/model_eval_pipeline.py
+    deps:
+    - path: artifact/build_model/model.pkl
+      hash: md5
+      md5: cbfcb274d20602d342fe6da4b7a00bc2
+      size: 3479115
+    - path: artifact/data_transformation/x_val.pkl
+      hash: md5
+      md5: 9f3db6762450cb331d4542b2ad0d03c5
+      size: 8238123
+    - path: artifact/data_transformation/y_val.pkl
+      hash: md5
+      md5: f05645d37ecb5d8970b1cf6566e760d6
+      size: 534880
+    - path: config/config.yaml
+      hash: md5
+      md5: ff9848b98d8533891fb2a00226ee6e8b
+      size: 1088
+    - path: src/emailClassifier/components/mode_eval.py
+      hash: md5
+      md5: 37858063db7ca20e97cf208947be7ab5
+      size: 1753
+    outs:
+    - path: artifact/model_evaluation/mertic.json
+      hash: md5
+      md5: f62a73501d01ff22566388f9bba96745
+      size: 390

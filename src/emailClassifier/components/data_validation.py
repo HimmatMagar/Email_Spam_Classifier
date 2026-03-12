@@ -1,6 +1,6 @@
 import pandas as pd
-from src.emailClassifier import loger
-from src.emailClassifier.entity import DataValidationConfig
+from emailClassifier import loger
+from emailClassifier.entity import DataValidationConfig
 
 
 class DataValidation:

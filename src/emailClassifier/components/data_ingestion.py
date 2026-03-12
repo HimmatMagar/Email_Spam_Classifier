@@ -2,8 +2,8 @@ import os
 import gdown
 import zipfile
 import urllib.request as r
-from src.emailClassifier import loger
-from src.emailClassifier.entity import DataIngestionConfig
+from emailClassifier import loger
+from emailClassifier.entity import DataIngestionConfig
 
 
 class DataIngestion:

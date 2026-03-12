@@ -1,6 +1,6 @@
-from src.emailClassifier import loger
-from src.emailClassifier.config import ConfigurationManager
-from src.emailClassifier.components.mode_eval import ModelEval
+from emailClassifier import loger
+from emailClassifier.config import ConfigurationManager
+from emailClassifier.components.mode_eval import ModelEval
 
 STAGE_NAME = "Model Eval Stage"
 

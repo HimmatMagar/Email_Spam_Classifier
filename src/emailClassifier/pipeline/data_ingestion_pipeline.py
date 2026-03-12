@@ -1,6 +1,6 @@
-from src.emailClassifier import loger
-from src.emailClassifier.config import ConfigurationManager
-from src.emailClassifier.components.data_ingestion import DataIngestion
+from emailClassifier import loger
+from emailClassifier.config import ConfigurationManager
+from emailClassifier.components.data_ingestion import DataIngestion
 
 STAGE_NAME = "Data Ingestion Config"
 

@@ -2,9 +2,9 @@ import os
 import joblib
 from pathlib import Path
 from sklearn.svm import SVC
-from src.emailClassifier.utils import *
-from src.emailClassifier import loger
-from src.emailClassifier.entity import ModelBuilingConfig
+from emailClassifier.utils import *
+from emailClassifier import loger
+from emailClassifier.entity import ModelBuilingConfig
 
 
 class BuildModel:
@@ -27,4 +27,5 @@ class BuildModel:
             model_path = os.path.join(self.config.root_dir, self.config.model)
             with open(model_path, "wb") as f:
                   joblib.dump(svc_model, f)
+            
             loger.info(f"Model building successfully in: {model_path}")

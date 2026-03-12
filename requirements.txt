@@ -13,4 +13,6 @@ pyYAML
 notebook
 nltk
 gdown
+dvc
+mlflow
 -e .

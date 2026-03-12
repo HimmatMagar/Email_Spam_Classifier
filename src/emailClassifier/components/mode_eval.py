@@ -44,3 +44,5 @@ class ModelEval:
 
             save_file(Path(self.config.metric), Model_Performance)
             loger.info(f"Model evaluation completed and report saved on {self.config.metric}")
+
+            return Model_Performance

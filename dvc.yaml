@@ -7,6 +7,7 @@ stages:
     outs:
       - artifact/data_ingestion/combined_data.csv
 
+
   data_validation:
     cmd: python src/emailClassifier/pipeline/data_validation_pipeline.py
     deps:
@@ -15,6 +16,7 @@ stages:
       - config/config.yaml
     outs:
       - artifact/data_validation/status.txt
+
 
   data_transformation:
     cmd: python src/emailClassifier/pipeline/data_transform_pipeline.py
@@ -29,6 +31,7 @@ stages:
       - artifact/data_transformation/y_val.pkl
       - artifact/data_transformation/vectorizer.pkl
   
+
   model_building:
     cmd: python src/emailClassifier/pipeline/model_build_pipeline.py
     deps:
@@ -38,12 +41,15 @@ stages:
       - config/config.yaml
     params:
       - params.yaml:
-        - SVC.C
-        - SVC.kernel
-        - SVC.gamma
+          - SVC.C
+          - SVC.kernel
+          - SVC.gamma
     outs:
       - artifact/build_model/model.pkl
+      - artifact/run_id.txt
+      - artifact/model_version.txt
   
+
   model_evaluation:
     cmd: python src/emailClassifier/pipeline/model_eval_pipeline.py
     deps:

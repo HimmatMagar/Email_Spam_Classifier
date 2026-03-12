@@ -29,3 +29,4 @@ class BuildModel:
                   joblib.dump(svc_model, f)
             
             loger.info(f"Model building successfully in: {model_path}")
+            return svc_model

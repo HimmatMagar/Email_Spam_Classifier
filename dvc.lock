@@ -5,8 +5,8 @@ stages:
     deps:
     - path: config/config.yaml
       hash: md5
-      md5: ff9848b98d8533891fb2a00226ee6e8b
-      size: 1088
+      md5: a557cf23e0b4a67bacd68c61eb0f3d84
+      size: 997
     - path: src/emailClassifier/components/data_ingestion.py
       hash: md5
       md5: 9cd8fe3714334e28111d8ff54c372392
@@ -25,8 +25,8 @@ stages:
       size: 139910068
     - path: config/config.yaml
       hash: md5
-      md5: ff9848b98d8533891fb2a00226ee6e8b
-      size: 1088
+      md5: a557cf23e0b4a67bacd68c61eb0f3d84
+      size: 997
     - path: src/emailClassifier/components/data_validation.py
       hash: md5
       md5: 1d970dc74dce5b1a212d91178b8e5510
@@ -45,8 +45,8 @@ stages:
       size: 139910068
     - path: config/config.yaml
       hash: md5
-      md5: ff9848b98d8533891fb2a00226ee6e8b
-      size: 1088
+      md5: a557cf23e0b4a67bacd68c61eb0f3d84
+      size: 997
     - path: src/emailClassifier/components/data_transformation.py
       hash: md5
       md5: ad1628fc40daffb2933ad897b0fd8527
@@ -54,7 +54,7 @@ stages:
     outs:
     - path: artifact/data_transformation/vectorizer.pkl
       hash: md5
-      md5: 57cd97d917a8ec42c2de95ebf819cea1
+      md5: d6ba8051a00e33e616d03856f0b1d96b
       size: 44308
     - path: artifact/data_transformation/x_train.pkl
       hash: md5
@@ -85,12 +85,12 @@ stages:
       size: 2137074
     - path: config/config.yaml
       hash: md5
-      md5: ff9848b98d8533891fb2a00226ee6e8b
-      size: 1088
+      md5: a557cf23e0b4a67bacd68c61eb0f3d84
+      size: 997
     - path: src/emailClassifier/components/model_build.py
       hash: md5
-      md5: f22fbf566de0e7c7701d3df9949da4f6
-      size: 981
+      md5: cd36a683ff1f4e322e6a677c48d22e14
+      size: 1011
     params:
       params.yaml:
         SVC.C: 1
@@ -101,6 +101,14 @@ stages:
       hash: md5
       md5: cbfcb274d20602d342fe6da4b7a00bc2
       size: 3479115
+    - path: artifact/model_version.txt
+      hash: md5
+      md5: eccbc87e4b5ce2fe28308fd9f2a7baf3
+      size: 1
+    - path: artifact/run_id.txt
+      hash: md5
+      md5: 2b7de4d6885acfc79fa908d829466b07
+      size: 32
   model_evaluation:
     cmd: python src/emailClassifier/pipeline/model_eval_pipeline.py
     deps:
@@ -118,12 +126,12 @@ stages:
       size: 534880
     - path: config/config.yaml
       hash: md5
-      md5: ff9848b98d8533891fb2a00226ee6e8b
-      size: 1088
+      md5: a557cf23e0b4a67bacd68c61eb0f3d84
+      size: 997
     - path: src/emailClassifier/components/mode_eval.py
       hash: md5
-      md5: 37858063db7ca20e97cf208947be7ab5
-      size: 1753
+      md5: 3dcfe6d23fcdf9106796cf12acbe97fe
+      size: 1793
     outs:
     - path: artifact/model_evaluation/mertic.json
       hash: md5

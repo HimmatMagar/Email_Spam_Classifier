@@ -54,7 +54,7 @@ stages:
     outs:
     - path: artifact/data_transformation/vectorizer.pkl
       hash: md5
-      md5: d6ba8051a00e33e616d03856f0b1d96b
+      md5: 2aa31287e5e1ef71e8b5a106a4680251
       size: 44308
     - path: artifact/data_transformation/x_train.pkl
       hash: md5
@@ -89,33 +89,29 @@ stages:
       size: 997
     - path: src/emailClassifier/components/model_build.py
       hash: md5
-      md5: cd36a683ff1f4e322e6a677c48d22e14
-      size: 1011
+      md5: 39fac34a86e51dacd80ff64afe3fd8de
+      size: 1055
     params:
       params.yaml:
-        SVC.C: 1
+        SVC.C: 1.3395
         SVC.gamma: scale
-        SVC.kernel: linear
+        SVC.kernel: rbf
     outs:
     - path: artifact/build_model/model.pkl
       hash: md5
-      md5: cbfcb274d20602d342fe6da4b7a00bc2
-      size: 3479115
-    - path: artifact/model_version.txt
-      hash: md5
-      md5: eccbc87e4b5ce2fe28308fd9f2a7baf3
-      size: 1
+      md5: 917d0a0ff627d56c5449b08578b48df4
+      size: 4396779
     - path: artifact/run_id.txt
       hash: md5
-      md5: 2b7de4d6885acfc79fa908d829466b07
+      md5: 3b20e33a7e6f87b0ae4a1382caa567c4
       size: 32
   model_evaluation:
     cmd: python src/emailClassifier/pipeline/model_eval_pipeline.py
     deps:
     - path: artifact/build_model/model.pkl
       hash: md5
-      md5: cbfcb274d20602d342fe6da4b7a00bc2
-      size: 3479115
+      md5: 917d0a0ff627d56c5449b08578b48df4
+      size: 4396779
     - path: artifact/data_transformation/x_val.pkl
       hash: md5
       md5: 9f3db6762450cb331d4542b2ad0d03c5
@@ -130,10 +126,10 @@ stages:
       size: 997
     - path: src/emailClassifier/components/mode_eval.py
       hash: md5
-      md5: 3dcfe6d23fcdf9106796cf12acbe97fe
-      size: 1793
+      md5: 6e59d78bc93ed48ffac648bde25fb434
+      size: 1659
     outs:
     - path: artifact/model_evaluation/mertic.json
       hash: md5
-      md5: f62a73501d01ff22566388f9bba96745
-      size: 390
+      md5: c68d3fbeff02cc2839cc9a013f348c7c
+      size: 334

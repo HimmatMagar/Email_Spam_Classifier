@@ -47,7 +47,6 @@ stages:
     outs:
       - artifact/build_model/model.pkl
       - artifact/run_id.txt
-      - artifact/model_version.txt
   
 
   model_evaluation:

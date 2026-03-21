@@ -20,7 +20,8 @@ class BuildModel:
                   C = self.config.C,
                   kernel = self.config.kernel,
                   gamma = self.config.gamma,
-                  class_weight="balanced"
+                  class_weight="balanced",
+                  probability=True
             )
 
             svc_model.fit(xtrain, ytrain)

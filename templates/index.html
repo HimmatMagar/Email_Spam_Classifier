@@ -4,7 +4,7 @@
 <head>
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>📧 Spam or Ham? · simple classifier</title>
+      <title>Spam or Ham? · simple classifier</title>
       <style>
             * {
                   box-sizing: border-box;
@@ -224,14 +224,14 @@
 <body>
       <div class="card">
             <h1>
-                  📬 Email Classifier
+                  Email Classifier
                   <span>spam? or not?</span>
             </h1>
-            <div class="subhead">paste any email message — instant vibe check</div>
+            <div class="subhead">paste any email message & get instant result</div>
 
             <!-- main input -->
             <div class="email-box">
-                  <label for="emailContent">✍️ Email content</label>
+                  <label for="emailContent">Email content</label>
                   <textarea id="emailContent"
                         placeholder="e.g. &quot;Congratulations, you've won a free iPhone! Click here...&quot; or &quot;Hey, let's grab lunch tomorrow&quot;">Congratulations! You are the lucky winner of a $1000 gift card. Click the link to claim now.</textarea>
             </div>
@@ -249,15 +249,10 @@
                   <span class="result-label">📌 verdict</span>
                   <div class="verdict neutral" id="verdictDisplay">—</div>
             </div>
-
-            <!-- <div class="disclaimer">
-                  <strong>⚡ simple demo</strong> — uses basic keyword rules, not real AI.
-            </div> -->
       </div>
 
       <script>
             (function () {
-                  // ----- simple rule‑based classification (spam / not spam) -----
                   function classifyEmail(text) {
                         if (!text || text.trim() === '') return 'neutral';   // empty input
 

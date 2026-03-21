@@ -1,4 +1,4 @@
 SVC:
-  C: 1
-  kernel: "linear"
+  C: 1.3395
+  kernel: "rbf"
   gamma: "scale"

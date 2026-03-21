@@ -1,14 +1,21 @@
 import mlflow
 import joblib
 from pathlib import Path
+from src.emailClassifier.utils.mlflow_manager import configure_mlflow, load_run_id
 
 
 class PredictionPipeline:
       def __init__(self):
             """Initialize the prediction pipeline by loading trained model and vectorizer."""
             try:
-                  self.model = mlflow.pyfunc.load_model("models:/EmailClassifierSVC/production")
-                  self.vectorizer = joblib.load(Path('artifact/data_transformation/vectorizer.pkl'))
+                  self.model = mlflow.pyfunc.load_model("models:/SpamClassifierSVC/production")
+                  configure_mlflow(experiment_name="spam-classifier")
+                  local_path = mlflow.artifacts.download_artifacts(
+                        run_id=load_run_id(),
+                        artifact_path="vectorizer.pkl"
+                  )
+                  with open(local_path, 'r') as f:
+                        self.vectorizer = joblib.load(f)
             except FileNotFoundError as e:
                   raise FileNotFoundError(f"Model or vectorizer file not found: {e}")
             except Exception as e:

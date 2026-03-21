@@ -1,5 +1,5 @@
 COLUMN:
-  label: [int, str]
+  label: str
   text: str
 
 TARGET:

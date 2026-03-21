@@ -1,8 +1,10 @@
+import os
 import mlflow
+import mlflow.sklearn
 from emailClassifier import loger
 from emailClassifier.config import ConfigurationManager
 from emailClassifier.components.model_build import BuildModel
-from emailClassifier.utils.mlflow_manager import configure_mlflow
+from emailClassifier.utils.mlflow_manager import configure_mlflow, save_run_id
 
 STAGE_NAME = "Model Building Stage"
 
@@ -14,42 +16,40 @@ class BuildModelPipeline:
             config = ConfigurationManager()
             model_build_config = config.get_model_building_config()
 
-            configure_mlflow()
-            mlflow.set_experiment("Email-Classifier")
+            configure_mlflow(experiment_name="Email-Spam")
 
-            with mlflow.start_run(run_name="SVC_Model") as run:
-                  mlflow.log_params({
-                        "C": model_build_config.C,
-                        "kernel": model_build_config.kernel,
-                        "gamma": model_build_config.gamma
-                  })
-                  model = BuildModel(model_build_config)
-                  svc_model = model.build_model_architecture()
+            with mlflow.start_run(run_name="SVM-Model") as run:
+                  try:
+                        mlflow.log_params({
+                              "C": model_build_config.C,
+                              "kernel": model_build_config.kernel,
+                              "gamma": model_build_config.gamma
+                        })
+                        model = BuildModel(model_build_config)
+                        model_svc = model.build_model_architecture()
+                        print(f"model built: {model_svc}")
+                        
+                        logged_model = mlflow.sklearn.log_model(
+                              sk_model=model_svc,
+                              artifact_path="model"
+                        )
+                        with open("artifact/model_id.txt", "w") as f:
+                              f.write(logged_model.model_id)
+                        loger.info(f"Model logged successfully and id saved in artifact/model_id")
 
-                  model_info = mlflow.sklearn.log_model(
-                        sk_model=svc_model,
-                        artifact_path="model",
-                        registered_model_name="EmailClassifierSVC"
-                  )
-                  loger.info("Model registered")
+                        vecPath = "artifact/data_transformation/vectorizer.pkl"
+                        print(f"vectorizer exists: {os.path.exists(vecPath)}")
+                        mlflow.log_artifact(
+                              local_path    = vecPath,
+                              artifact_path = "vectorizer"
+                        )
 
-                  client = mlflow.tracking.MlflowClient()
-                  model_version = client.get_latest_versions(
-                        name="EmailClassifierSVC",
-                        stages=["None"]                             # ← newly registered = "None" stage
-                  )[0].version
+                        save_run_id(run.info.run_id)
+                  except Exception as e:
+                        print(f"Training Failed {e}")
+                        raise e
 
-                  client.transition_model_version_stage(
-                        name="EmailClassifierSVC",
-                        version=model_version,
-                        stage="Staging"
-                  )
 
-                  with open("artifact/run_id.txt", "w") as f:
-                        f.write(run.info.run_id)
-
-                  with open("artifact/model_version.txt", "w") as f:
-                        f.write(model_version)
 
 
 if __name__ == "__main__":

@@ -3,8 +3,8 @@ from pathlib import Path
 from box.config_box import ConfigBox
 from emailClassifier import loger
 from emailClassifier.utils import *
-from sklearn.metrics import classification_report
 from emailClassifier.entity import ModelEvalConfig
+from sklearn.metrics import classification_report
 
 
 
@@ -19,25 +19,23 @@ class ModelEval:
       
       
       def eval_model(self) -> None:
-            x_val = load_file(Path(self.config.xval_file))
-            y_val = load_file(Path(self.config.yval_file))
+            xVal = load_file(Path(self.config.xval_file))
+            yVal = load_file(Path(self.config.yval_file))
             model = joblib.load(self.config.model)
 
-            y_pred = model.predict(x_val)
-            evaluation = self.metrics(y_val, y_pred)
+            yPred = model.predict(xVal)
+            evaluation = self.metrics(yVal, yPred)
 
             Model_Performance = {
                   'Class_0': {
                         'precision': evaluation['0']['precision'],
                         'recall': evaluation['0']['recall'],
-                        'f1-score': evaluation['0']['f1-score'],
-                        'support': evaluation['0']['support']
+                        'f1-score': evaluation['0']['f1-score']
                   },
                   'Class_1': {
                         'precision': evaluation['1']['precision'],
                         'recall': evaluation['1']['recall'],
-                        'f1-score': evaluation['1']['f1-score'],
-                        'support': evaluation['1']['support']
+                        'f1-score': evaluation['1']['f1-score']
                   },
                   'accuracy': evaluation['accuracy']
             }

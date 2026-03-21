@@ -19,7 +19,8 @@ class BuildModel:
             svc_model = SVC(
                   C = self.config.C,
                   kernel = self.config.kernel,
-                  gamma = self.config.gamma
+                  gamma = self.config.gamma,
+                  class_weight="balanced"
             )
 
             svc_model.fit(xtrain, ytrain)

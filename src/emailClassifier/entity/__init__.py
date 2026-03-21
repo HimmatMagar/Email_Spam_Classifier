@@ -29,7 +29,7 @@ class ModelBuilingConfig:
       xtrain_data: Path
       ytrain_data: Path
       model: str
-      C: int
+      C: float
       kernel: str
       gamma: str
 

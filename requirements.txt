@@ -15,4 +15,5 @@ nltk
 gdown
 dvc
 mlflow
+dagshub
 -e .

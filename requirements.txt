@@ -16,3 +16,4 @@ gdown
 dvc
 mlflow
 dagshub
+-e .

@@ -10,7 +10,7 @@ class PredictionPipeline:
             """Initialize the prediction pipeline by loading trained model and vectorizer."""
             try:
                   self.model = mlflow.pyfunc.load_model(
-                        "models:/SpamClassifierSVC/Production"
+                        "models:/EmailClassifierSVC@champion"
                   )
 
                   artifact_path = mlflow.artifacts.download_artifacts(

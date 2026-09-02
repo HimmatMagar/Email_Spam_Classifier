@@ -1247,7 +1247,7 @@ wheels = [
 ]
 
 [[package]]
-name = "email-spam-classifier"
+name = "emailclassifier"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [

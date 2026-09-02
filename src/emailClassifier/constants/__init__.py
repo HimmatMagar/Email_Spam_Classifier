@@ -2,5 +2,5 @@ from pathlib import Path
 
 
 CONFIG_PATH = Path("config/config.yaml")
-PARAMS_PATH = Path("params.yaml")
-SCHEMA_PATH = Path('schema.yaml')
+PARAMS_PATH = Path("config/params.yaml")
+SCHEMA_PATH = Path('config/schema.yaml')

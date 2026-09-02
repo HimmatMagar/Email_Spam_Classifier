@@ -40,7 +40,7 @@ stages:
       - output/data_transformation/y_train.pkl
       - config/config.yaml
     params:
-      - params.yaml:
+      - config/params.yaml:
           - SVC.C
           - SVC.kernel
           - SVC.gamma

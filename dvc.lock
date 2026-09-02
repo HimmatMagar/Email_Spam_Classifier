@@ -1,0 +1,135 @@
+schema: '2.0'
+stages:
+  data_ingestion:
+    cmd: python src/emailClassifier/pipeline/data_ingestion_pipeline.py
+    deps:
+    - path: config/config.yaml
+      hash: md5
+      md5: 8f33a2590d8528acdb7b4917438e745c
+      size: 935
+    - path: src/emailClassifier/components/data_ingestion.py
+      hash: md5
+      md5: eba229f0fe3355a3a4eb30fefcc65f51
+      size: 986
+    outs:
+    - path: output/data_ingestion/combined_data.csv
+      hash: md5
+      md5: 544e3dc00840bac4ea1aa8c7ca744f13
+      size: 139910068
+  data_validation:
+    cmd: python src/emailClassifier/pipeline/data_validation_pipeline.py
+    deps:
+    - path: config/config.yaml
+      hash: md5
+      md5: 8f33a2590d8528acdb7b4917438e745c
+      size: 935
+    - path: output/data_ingestion/combined_data.csv
+      hash: md5
+      md5: 544e3dc00840bac4ea1aa8c7ca744f13
+      size: 139910068
+    - path: src/emailClassifier/components/data_validation.py
+      hash: md5
+      md5: 35d3b69c8f7a25231c2cdef50e7c717b
+      size: 1165
+    outs:
+    - path: output/data_validation/status.txt
+      hash: md5
+      md5: c5aff53158692e0817a3632881347e7b
+      size: 23
+  data_transformation:
+    cmd: python src/emailClassifier/pipeline/data_transform_pipeline.py
+    deps:
+    - path: config/config.yaml
+      hash: md5
+      md5: 8f33a2590d8528acdb7b4917438e745c
+      size: 935
+    - path: output/data_ingestion/combined_data.csv
+      hash: md5
+      md5: 544e3dc00840bac4ea1aa8c7ca744f13
+      size: 139910068
+    - path: src/emailClassifier/components/data_transformation.py
+      hash: md5
+      md5: c944fb8c42ccd018de07db8ccbf193b5
+      size: 1895
+    outs:
+    - path: output/data_transformation/vectorizer.pkl
+      hash: md5
+      md5: 4786fa6bbc9c7bd071ccf18d94757e83
+      size: 44307
+    - path: output/data_transformation/x_train.pkl
+      hash: md5
+      md5: 99d6dbd4b8a0450227d523dd8ceff5e2
+      size: 32930467
+    - path: output/data_transformation/x_val.pkl
+      hash: md5
+      md5: e5d42fbac917364c5ad82d2ff5623574
+      size: 8238075
+    - path: output/data_transformation/y_train.pkl
+      hash: md5
+      md5: d7b6d7d5319e5e06512ab14197cb8e56
+      size: 2137074
+    - path: output/data_transformation/y_val.pkl
+      hash: md5
+      md5: f05645d37ecb5d8970b1cf6566e760d6
+      size: 534880
+  model_building:
+    cmd: python src/emailClassifier/pipeline/model_build_pipeline.py
+    deps:
+    - path: config/config.yaml
+      hash: md5
+      md5: 8f33a2590d8528acdb7b4917438e745c
+      size: 935
+    - path: output/data_transformation/x_train.pkl
+      hash: md5
+      md5: 99d6dbd4b8a0450227d523dd8ceff5e2
+      size: 32930467
+    - path: output/data_transformation/y_train.pkl
+      hash: md5
+      md5: d7b6d7d5319e5e06512ab14197cb8e56
+      size: 2137074
+    - path: src/emailClassifier/components/model_build.py
+      hash: md5
+      md5: fae3f83de87ce597fd8f034cb1be5bbc
+      size: 1059
+    params:
+      config/params.yaml:
+        SVC.C: 1.3395
+        SVC.gamma: scale
+        SVC.kernel: rbf
+    outs:
+    - path: output/build_model/model.pkl
+      hash: md5
+      md5: 1393d2f17d1ceca9903da3f9c7d5239f
+      size: 4396811
+    - path: output/run_id.txt
+      hash: md5
+      md5: d3b5016b1aa5299bd6cd0704529f713f
+      size: 32
+  model_evaluation:
+    cmd: python src/emailClassifier/pipeline/model_eval_pipeline.py
+    deps:
+    - path: config/config.yaml
+      hash: md5
+      md5: 8f33a2590d8528acdb7b4917438e745c
+      size: 935
+    - path: output/build_model/model.pkl
+      hash: md5
+      md5: 1393d2f17d1ceca9903da3f9c7d5239f
+      size: 4396811
+    - path: output/data_transformation/x_val.pkl
+      hash: md5
+      md5: e5d42fbac917364c5ad82d2ff5623574
+      size: 8238075
+    - path: output/data_transformation/y_val.pkl
+      hash: md5
+      md5: f05645d37ecb5d8970b1cf6566e760d6
+      size: 534880
+    - path: src/emailClassifier/components/mode_eval.py
+      hash: md5
+      md5: 125c795a2c99b5c41009070f1ba46987
+      size: 1613
+    outs:
+    - path: output/model_evaluation/mertic.json
+      hash: md5
+      md5: 6ad8b344ea7f68efa89fe04f8bf52518
+      size: 322

@@ -18,7 +18,7 @@ class BuildModelPipeline:
 
             configure_mlflow(experiment_name="Email-Spam")
 
-            with mlflow.start_run(run_name="SVM-Model") as run:
+            with mlflow.start_run(run_name="SVM-model") as run:
                   try:
                         mlflow.log_params({
                               "C": model_build_config.C,
@@ -31,13 +31,16 @@ class BuildModelPipeline:
                         
                         logged_model = mlflow.sklearn.log_model(
                               sk_model=model_svc,
-                              artifact_path="model"
+                              artifact_path="model",
+                              skops_trusted_types=[
+                                    "scipy.sparse._csr.csr_matrix"
+                              ]
                         )
-                        with open("artifact/model_id.txt", "w") as f:
+                        with open("output/model_id.txt", "w") as f:
                               f.write(logged_model.model_id)
-                        loger.info(f"Model logged successfully and id saved in artifact/model_id")
+                        loger.info(f"Model logged successfully and id saved in output/model_id")
 
-                        vecPath = "artifact/data_transformation/vectorizer.pkl"
+                        vecPath = "output/data_transformation/vectorizer.pkl"
                         print(f"vectorizer exists: {os.path.exists(vecPath)}")
                         mlflow.log_artifact(
                               local_path    = vecPath,

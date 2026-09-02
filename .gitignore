@@ -6,7 +6,9 @@ __pycache__/
 # C extensions
 *.so
 
-artifact/*
+output/*
+
+.dvcignore
 
 # Distribution / packaging
 .Python

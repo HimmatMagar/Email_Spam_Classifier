@@ -31,7 +31,7 @@ def configure_mlflow(experiment_name: str) -> None:
     print(f"Mlflow -> Dagshub | Experiment: {experiment_name}")
 
 
-def save_run_id(run_id: str, path: str = "artifact/run_id.txt") -> None:
+def save_run_id(run_id: str, path: str = "output/run_id.txt") -> None:
     try:
         with open(path, "w") as f:
             f.write(run_id)
@@ -39,7 +39,7 @@ def save_run_id(run_id: str, path: str = "artifact/run_id.txt") -> None:
         raise e
 
 
-def load_run_id(path: str = "artifact/run_id.txt") -> None:
+def load_run_id(path: str = "output/run_id.txt") -> None:
     try:
         with open(path) as f:
             id = f.read().strip()

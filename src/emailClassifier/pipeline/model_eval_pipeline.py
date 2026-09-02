@@ -17,7 +17,7 @@ class ModelEvalPipeline:
             run_id = load_run_id()
 
             try:
-                  with open("artifact/model_id.txt", 'r') as f:
+                  with open("output/model_id.txt", 'r') as f:
                         model_id = f.read()
             except FileNotFoundError as e:
                   raise
@@ -41,13 +41,13 @@ class ModelEvalPipeline:
                   if metrics["accuracy"] >= ACCURACY_THRESHOLD:
                         model = mlflow.register_model(
                               model_uri=f"models:/{model_id}",
-                              name = "SpamClassifierSVC"
+                              name = "EmailClassifierSVC"
                         )
                         loger.info(f"Registered — accuracy: {metrics['accuracy']}")
 
                         client = mlflow.tracking.MlflowClient()
                         client.transition_model_version_stage(
-                              name="SpamClassifierSVC",
+                              name="EmailClassifierSVC",
                               version=model.version,
                               stage="Staging"
                         )

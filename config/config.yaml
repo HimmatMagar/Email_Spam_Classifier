@@ -2,7 +2,7 @@ artifact_root: output
 
 data_ingestion:
   root_dir: output/data_ingestion
-  data_path: "https://drive.google.com/uc?export=download&id=1OPoYRR_GjdedXQrBiRzV0wPQaNCPmm0I"
+  data_path: "https://drive.google.com/uc?export=download&id=1-GxDJjXNJYwb_s9-sfo0VIbz0vV1bdLp"
   zip_file: output/data_ingestion/data.zip
   unzip_file: output/data_ingestion
 

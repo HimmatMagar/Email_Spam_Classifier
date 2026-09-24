@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spam Email Classifier</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📧 Spam Email Classifier</h1>
+            <p class="subtitle">Paste your email content below to check if it's spam or not</p>
+        </header>
+
+        <main>
+            <div class="input-section">
+                <label for="emailInput">Email Content:</label>
+                <textarea 
+                    id="emailInput" 
+                    placeholder="Paste your email content here..."
+                    rows="10"
+                ></textarea>
+                
+                <div class="button-group">
+                    <button id="predictBtn" class="btn-primary">
+                        <span class="btn-text">Classify Email</span>
+                        <span class="spinner hidden"></span>
+                    </button>
+                    <button id="clearBtn" class="btn-secondary">Clear</button>
+                </div>
+            </div>
+
+            <div id="resultSection" class="result-section hidden">
+                <div id="resultCard" class="result-card">
+                    <div class="result-icon" id="resultIcon">✓</div>
+                    <h2 id="resultTitle">Result</h2>
+                    <p id="resultMessage"></p>
+                    <div class="confidence-bar">
+                        <div class="confidence-label">
+                            <span>Confidence:</span>
+                            <span id="confidenceValue">0%</span>
+                        </div>
+                        <div class="confidence-track">
+                            <div id="confidenceFill" class="confidence-fill"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="errorSection" class="error-section hidden">
+                <p id="errorMessage"></p>
+            </div>
+        </main>
+
+        <footer>
+            <p>Powered by FastAPI • Model: Spam Classifier</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

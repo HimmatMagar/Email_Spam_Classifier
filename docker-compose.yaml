@@ -17,8 +17,8 @@ services:
     working_dir: /frontend
     volumes:
       - ./frontend:/frontend
-    command: python -m http.server 5000 --bind 0.0.0.0
+    command: python -u -m http.server 5000 --bind 0.0.0.0
     ports:
-      - "5000:5000"
+      - "3000:5000"
     depends_on:
       - backend

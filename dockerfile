@@ -1,19 +1,16 @@
 FROM python:3.12-slim
 
-COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
-
 WORKDIR /app
+
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
 # Copy dependency files first
 COPY pyproject.toml uv.lock ./
 
-# Install dependencies into the system environment
-RUN uv sync --frozen --no-dev --no-install-project
+RUN uv sync --frozen --no-dev
 
 # Copy application
 COPY . .
-
-RUN uv sync --frozen --no-dev
 
 EXPOSE 5000
 

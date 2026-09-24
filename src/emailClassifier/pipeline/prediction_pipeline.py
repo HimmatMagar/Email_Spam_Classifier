@@ -1,6 +1,7 @@
 import mlflow
 import joblib
 from pathlib import Path
+from mlflow import MlflowClient
 from emailClassifier import loger
 from emailClassifier.utils.mlflow_manager import configure_mlflow, load_run_id
 
@@ -9,12 +10,21 @@ class PredictionPipeline:
       def __init__(self):
             """Initialize the prediction pipeline by loading trained model and vectorizer."""
             try:
+
+                  client = MlflowClient()
+
+                  champion = client.get_model_version_by_alias(
+                        "EmailClassifierSVC",
+                        "champion"
+                  )
+
+                  run_id = champion.run_id
                   self.model = mlflow.pyfunc.load_model(
                         "models:/EmailClassifierSVC@champion"
                   )
 
                   artifact_path = mlflow.artifacts.download_artifacts(
-                        run_id=load_run_id(),
+                        run_id=run_id,
                         artifact_path="vectorizer/vectorizer.pkl"
                   )
 

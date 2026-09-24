@@ -2,11 +2,20 @@ import pandas as pd
 from fastapi import FastAPI
 from typing import Annotated
 from pydantic import BaseModel, Field
+from contextlib import asynccontextmanager
 from fastapi.middleware.cors import CORSMiddleware
 from src.emailClassifier.pipeline.prediction_pipeline import PredictionPipeline
 
 
-app = FastAPI(title="Email Spam Classifier")
+predict_pipe = None
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    global predict_pipe
+    predict_pipe = PredictionPipeline()
+    yield
+
+app = FastAPI(title="Email Spam Classifier", lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,
@@ -18,8 +27,6 @@ app.add_middleware(
 
 class Input(BaseModel):
       text: Annotated[str, Field(..., description=("Give the email text to classify the email"))]
-
-predict_pipe = PredictionPipeline()
 
 @app.get("/")
 async def home():

@@ -1,7 +1,7 @@
 # Email Spam Classifier
 
 ## 📧 Project Overview
-Email Spam Classifier is a machine learning application that automatically classifies emails as **spam** or **not spam**. The project uses text preprocessing, TF-IDF vectorization, and a trained classification model to make real-time predictions. It includes both a FastAPI backend and an interactive HTML frontend for easy email classification.
+Email Spam Classifier is a machine learning application that automatically classifies emails as **spam** or **not spam**. The project uses text preprocessing, TF-IDF vectorization, and a trained classification model to make real-time predictions. It includes both a FastAPI backend and an interactive HTML frontend for easy email classification and docker and docker compose for container.
 
 ## 📁 Project Structure
 ```

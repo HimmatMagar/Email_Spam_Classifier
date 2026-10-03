@@ -36,7 +36,7 @@ async def home():
 async def health():
       return {
             "message": 'OK',
-            "status": 200
+            "status_code": 200
       }
 
 @app.post("/predict")

@@ -32,9 +32,12 @@ class Input(BaseModel):
 async def home():
       return {'message': "Welcome to email spam classifier"}
 
-@app.get("/train")
-async def train_model():
-      pass
+@app.get("/health")
+async def health():
+      return {
+            "message": 'OK',
+            "status": 200
+      }
 
 @app.post("/predict")
 async def predict_spam_email(UserInput: Input):

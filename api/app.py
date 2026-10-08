@@ -1,11 +1,11 @@
-from src.emailClassifier import loger
+from emailClassifier import loger
 from fastapi import FastAPI, HTTPException
 from typing import Annotated
 from pydantic import BaseModel, Field
 from fastapi.responses import JSONResponse
 from contextlib import asynccontextmanager
 from fastapi.middleware.cors import CORSMiddleware
-from src.emailClassifier.pipeline.prediction_pipeline import PredictionPipeline
+from emailClassifier.pipeline.prediction_pipeline import PredictionPipeline
 
 
 predict_pipe = None

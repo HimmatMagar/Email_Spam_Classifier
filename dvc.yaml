@@ -27,8 +27,10 @@ stages:
     outs:
       - output/data_transformation/x_train.pkl
       - output/data_transformation/x_val.pkl
+      - output/data_transformation/x_test.pkl
       - output/data_transformation/y_train.pkl
       - output/data_transformation/y_val.pkl
+      - output/data_transformation/y_test.pkl
       - output/data_transformation/vectorizer.pkl
   
 

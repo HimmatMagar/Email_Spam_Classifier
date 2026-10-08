@@ -26,26 +26,36 @@ class DataTransform:
       def split_data(self) -> None:
             df = pd.read_csv(self.config.data_path)
 
-            X_train, X_val, y_train, y_val = train_test_split(
+            X_train, X_temp, y_train, y_temp = train_test_split(
                   df['text'], df['label'],
                   test_size=0.2,
                   random_state=42
             )
 
+            X_val, X_test, y_val, y_test = train_test_split(
+                  X_temp, y_temp,
+                  test_size=0.5,
+                  random_state=42
+            )
+
             tfidf_vectorizer = self.get_pipeline()
 
-
             X_train_matrix = tfidf_vectorizer.fit_transform(X_train)
-            X_val_matrix = tfidf_vectorizer.transform(X_val)
+            X_val_matrix   = tfidf_vectorizer.transform(X_val)
+            X_test_matrix  = tfidf_vectorizer.transform(X_test)
 
-            # Save the vectorizer to pkl file
+            # Save vectorizer
             vectorizer_path = os.path.join(self.config.root_dir, "vectorizer.pkl")
             joblib.dump(tfidf_vectorizer, vectorizer_path)
             loger.info(f"Vectorizer saved to {vectorizer_path}")
 
+            # Save matrices and labels
             joblib.dump(X_train_matrix, os.path.join(self.config.root_dir, "x_train.pkl"))
-            joblib.dump(X_val_matrix, os.path.join(self.config.root_dir, "x_val.pkl"))
+            joblib.dump(X_val_matrix,   os.path.join(self.config.root_dir, "x_val.pkl"))
+            joblib.dump(X_test_matrix,  os.path.join(self.config.root_dir, "x_test.pkl"))
+
             joblib.dump(y_train, os.path.join(self.config.root_dir, "y_train.pkl"))
-            joblib.dump(y_val, os.path.join(self.config.root_dir, "y_val.pkl"))
+            joblib.dump(y_val,   os.path.join(self.config.root_dir, "y_val.pkl"))
+            joblib.dump(y_test,  os.path.join(self.config.root_dir, "y_test.pkl"))
 
             loger.info("Splitted data into train test split")

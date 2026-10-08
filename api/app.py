@@ -1,4 +1,4 @@
-from emailClassifier import loger
+from src.emailClassifier import loger
 from fastapi import FastAPI, HTTPException
 from typing import Annotated
 from pydantic import BaseModel, Field

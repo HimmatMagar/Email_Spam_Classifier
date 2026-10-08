@@ -19,6 +19,6 @@ services:
       - ./frontend:/frontend
     command: python -u -m http.server 5000 --bind 0.0.0.0
     ports:
-      - "3000:5000"
+      - "3000:5132"
     depends_on:
       - backend

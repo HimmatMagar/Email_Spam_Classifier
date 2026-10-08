@@ -1,0 +1,110 @@
+# =========================
+# Python
+# =========================
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# =========================
+# Environment / Secrets
+# =========================
+.env
+.env.*
+!.env.example
+
+# =========================
+# Git
+# =========================
+.git/
+.gitignore
+.gitattributes
+
+# =========================
+# DVC
+# =========================
+.dvc/
+.dvcignore
+*.dvc
+
+# DVC pipeline outputs / generated data
+artifacts/
+outputs/
+output/
+data/
+# Uncomment if your application needs data/ inside the image
+# data/
+
+# =========================
+# MLflow
+# =========================
+mlruns/
+mlartifacts/
+
+# =========================
+# Jupyter / Notebooks
+# =========================
+.ipynb_checkpoints/
+*.ipynb
+
+# =========================
+# Testing
+# =========================
+tests/
+test/
+.pytest_cache/
+.coverage
+htmlcov/
+coverage.xml
+
+# =========================
+# Logging
+# =========================
+logs/
+log/
+*.log
+
+# =========================
+# Docker
+# =========================
+Dockerfile
+Dockerfile.*
+docker-compose.yml
+docker-compose.yaml
+.dockerignore
+
+# =========================
+# Documentation
+# =========================
+README.md
+*.md
+
+# =========================
+# OS files
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# IDE
+# =========================
+.vscode/
+.idea/
+
+# =========================
+# Temporary files
+# =========================
+*.tmp
+*.temp
+*.swp
+*.swo
+*~

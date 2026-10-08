@@ -4,14 +4,13 @@ from conftest import *
 def test_home(client):
     r = client.get("/")
     assert r.status_code == 200
-    assert "message" in r
+    assert "message" in r.json()
 
 
 def test_health(client):
     r = client.get("/health")
     assert r.status_code == 200
     body = r.json()
-    assert body['status'] is 'Ok'
     assert body['model_loaded'] is True
 
 

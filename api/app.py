@@ -64,5 +64,5 @@ async def predict_spam_email(UserInput: Input):
 
       return ResponseModel(
             prediction = prediction,
-            label = "Spam" if prediction == 1 else "Ham",
+            label = "spam" if prediction == 1 else "ham",
       )

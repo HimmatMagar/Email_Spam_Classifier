@@ -41,3 +41,10 @@ class ModelEvalConfig:
       yval_file: Path
       model: Path
       metric: Path
+
+
+@dataclass(frozen=True)
+class ModelPromoteConfig:
+      root_dir: Path
+      x_test: Path
+      y_test: Path

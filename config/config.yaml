@@ -27,3 +27,8 @@ model_evaluation:
   yval_data: output/data_transformation/y_val.pkl
   model: output/build_model/model.pkl
   metric_file: output/model_evaluation/mertic.json
+
+model_promotion:
+  root_dir: output/model_promotion
+  x_test: output/data_transformation/x_test.pkl
+  y_test: output/data_transformation/y_test.pkl

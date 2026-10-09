@@ -10,7 +10,7 @@ class PredictionPipeline:
       def __init__(self):
             """Initialize the prediction pipeline by loading trained model and vectorizer."""
             try:
-                  with open("output/model_name.txt", 'r') as f:
+                  with open("model_name.txt", 'r') as f:
                         MODELNAME = f.read()
             except FileExistsError as e:
                   raise e

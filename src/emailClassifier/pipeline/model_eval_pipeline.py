@@ -1,4 +1,5 @@
 import mlflow
+from mlflow.client import MlflowClient
 from emailClassifier import loger
 from emailClassifier.config import ConfigurationManager
 from emailClassifier.components.mode_eval import ModelEval
@@ -11,16 +12,11 @@ class ModelEvalPipeline:
             pass
 
       def main(self):
+            client = MlflowClient()
             config = ConfigurationManager()
             model_eval_config = config.get_model_eval_config()
 
             run_id = load_run_id()
-
-            try:
-                  with open("output/model_id.txt", 'r') as f:
-                        model_id = f.read()
-            except FileNotFoundError as e:
-                  raise
 
             configure_mlflow(experiment_name="Email-Spam")
             with mlflow.start_run(run_id=run_id):
@@ -37,22 +33,10 @@ class ModelEvalPipeline:
                         "class1_f1":        metrics["Class_1"]["f1-score"],
                   })
 
-                  ACCURACY_THRESHOLD = 0.92
-                  if metrics["accuracy"] >= ACCURACY_THRESHOLD:
-                        model = mlflow.register_model(
-                              model_uri=f"models:/{model_id}",
-                              name = "EmailClassifierSVC"
-                        )
-                        loger.info(f"Registered — accuracy: {metrics['accuracy']}")
-
-                        client = mlflow.tracking.MlflowClient()
-                        client.transition_model_version_stage(
-                              name="EmailClassifierSVC",
-                              version=model.version,
-                              stage="Staging"
-                        )
-                  else:
-                        loger.warning(f"Not registered — accuracy: {metrics['accuracy']} below threshold")
+                  versions = client.search_model_versions(f"run_id='{run_id}'")
+                  latest_version = max(versions, key=lambda mv: int(mv.version)).version
+                  model_name = versions[-1].name
+                  client.set_registered_model_alias(model_name, "challenger", latest_version)
                   
 
 if __name__ == "__main__":

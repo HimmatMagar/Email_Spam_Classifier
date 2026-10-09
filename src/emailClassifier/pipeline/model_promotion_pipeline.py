@@ -1,4 +1,3 @@
-import mlflow
 from emailClassifier import loger
 from emailClassifier.config import ConfigurationManager
 from emailClassifier.components.model_promotion import ModelPromotion

@@ -32,13 +32,11 @@ class BuildModelPipeline:
                         logged_model = mlflow.sklearn.log_model(
                               sk_model=model_svc,
                               artifact_path="model",
+                              registered_model_name="",
                               skops_trusted_types=[
                                     "scipy.sparse._csr.csr_matrix"
                               ]
                         )
-                        with open("output/model_id.txt", "w") as f:
-                              f.write(logged_model.model_id)
-                        loger.info(f"Model logged successfully and id saved in output/model_id")
 
                         vecPath = "output/data_transformation/vectorizer.pkl"
                         print(f"vectorizer exists: {os.path.exists(vecPath)}")

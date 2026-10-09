@@ -10,17 +10,22 @@ class PredictionPipeline:
       def __init__(self):
             """Initialize the prediction pipeline by loading trained model and vectorizer."""
             try:
-
+                  with open("output/model_name.txt", 'r') as f:
+                        MODELNAME = f.read()
+            except FileExistsError as e:
+                  raise e
+            
+            try:
                   client = MlflowClient()
 
                   champion = client.get_model_version_by_alias(
-                        "EmailClassifierSVC",
+                        MODELNAME,
                         "champion"
                   )
 
                   run_id = champion.run_id
                   self.model = mlflow.pyfunc.load_model(
-                        "models:/EmailClassifierSVC@champion"
+                        f"models:/{MODELNAME}@champion"
                   )
 
                   artifact_path = mlflow.artifacts.download_artifacts(

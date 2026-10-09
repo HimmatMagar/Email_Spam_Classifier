@@ -43,9 +43,9 @@ stages:
       - config/config.yaml
     params:
       - config/params.yaml:
-          - SVC.C
-          - SVC.kernel
-          - SVC.gamma
+          - RFC.n_estimators
+          - RFC.min_samples_split
+          - RFC.min_samples_leaf
     outs:
       - output/build_model/model.pkl
       - output/run_id.txt
@@ -62,3 +62,13 @@ stages:
     metrics:
       - output/model_evaluation/mertic.json:
           cache: false
+
+  model_promotion:
+    cmd: uv run src/emailClassifier/pipeline/model_promotion_pipeline.py
+    deps:
+      - src/emailClassifier/components/model_promotion.py
+      - output/data_transformation/x_test.pkl
+      - output/data_transformation/y_test.pkl
+      - config/config.yaml
+    outs:
+      - output/model_name.txt

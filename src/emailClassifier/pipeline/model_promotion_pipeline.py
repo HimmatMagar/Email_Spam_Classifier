@@ -9,10 +9,10 @@ class ModelEvalPipeline:
             pass
 
       def main(self):
-            chall_name = ""
-            champ_name = "EmailClassifierSVC"
-            chall_alias = "Challenger"
-            champ_alias = "Champion"
+            chall_name = "RFCSpamModel"
+            champ_name = "spamClassifierModel"
+            chall_alias = "challenger"
+            champ_alias = "champion"
 
             config = ConfigurationManager()
             model_promote_config = config.get_model_promote_config()
@@ -24,7 +24,9 @@ class ModelEvalPipeline:
                   champ_alias=champ_alias,
                   config=model_promote_config
             )
-            model_promotion._select_champion_model()
+            promoted_model_name = model_promotion._select_champion_model()
+            with open("output/model_name.txt", 'w') as f:
+                  f.write(promoted_model_name)
             loger.info("Model Promotion stage complete")
 
 if __name__ == "__main__":

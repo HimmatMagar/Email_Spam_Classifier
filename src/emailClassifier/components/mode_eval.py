@@ -4,7 +4,7 @@ from box.config_box import ConfigBox
 from emailClassifier import loger
 from emailClassifier.utils import *
 from emailClassifier.entity import ModelEvalConfig
-from sklearn.metrics import classification_report
+from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_score
 
 
 
@@ -12,11 +12,6 @@ class ModelEval:
       def __init__(self, config: ModelEvalConfig):
             self.config = config
 
-
-      def metrics(self, actual, pred) -> ConfigBox:
-            data = classification_report(actual, pred, output_dict=True)
-            return ConfigBox(data)
-      
       
       def eval_model(self) -> None:
             xVal = load_file(Path(self.config.xval_file))
@@ -24,20 +19,12 @@ class ModelEval:
             model = joblib.load(self.config.model)
 
             yPred = model.predict(xVal)
-            evaluation = self.metrics(yVal, yPred)
 
             Model_Performance = {
-                  'Class_0': {
-                        'precision': evaluation['0']['precision'],
-                        'recall': evaluation['0']['recall'],
-                        'f1-score': evaluation['0']['f1-score']
-                  },
-                  'Class_1': {
-                        'precision': evaluation['1']['precision'],
-                        'recall': evaluation['1']['recall'],
-                        'f1-score': evaluation['1']['f1-score']
-                  },
-                  'accuracy': evaluation['accuracy']
+                  "accuracy": accuracy_score(yVal, yPred),
+                  "precision": precision_score(yVal, yPred, zero_division=0),
+                  "recall": recall_score(yVal, yPred, zero_division=0),
+                  "f1": f1_score(yVal, yPred, zero_division=0)
             }
 
             save_file(Path(self.config.metric), Model_Performance)

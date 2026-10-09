@@ -23,15 +23,7 @@ class ModelEvalPipeline:
                   model_eval = ModelEval(model_eval_config)
                   metrics = model_eval.eval_model()
 
-                  mlflow.log_metrics({
-                        "accuracy": metrics["accuracy"],
-                        "class0_precision": metrics["Class_0"]["precision"],
-                        "class0_recall":    metrics["Class_0"]["recall"],
-                        "class0_f1":        metrics["Class_0"]["f1-score"],
-                        "class1_precision": metrics["Class_1"]["precision"],
-                        "class1_recall":    metrics["Class_1"]["recall"],
-                        "class1_f1":        metrics["Class_1"]["f1-score"],
-                  })
+                  mlflow.log_metrics(metrics)
 
                   versions = client.search_model_versions(f"run_id='{run_id}'")
                   latest_version = max(versions, key=lambda mv: int(mv.version)).version

@@ -18,21 +18,21 @@ class BuildModelPipeline:
 
             configure_mlflow(experiment_name="Email-Spam")
 
-            with mlflow.start_run(run_name="SVM-model") as run:
+            with mlflow.start_run(run_name="RFC-Model") as run:
                   try:
                         mlflow.log_params({
-                              "C": model_build_config.C,
-                              "kernel": model_build_config.kernel,
-                              "gamma": model_build_config.gamma
+                              "n_estimators": model_build_config.n_estimators,
+                              "min_samples_split": model_build_config.min_samples_split,
+                              "min_samples_leaf": model_build_config.min_samples_leaf
                         })
                         model = BuildModel(model_build_config)
-                        model_svc = model.build_model_architecture()
-                        print(f"model built: {model_svc}")
+                        model_rfc = model.build_model_architecture()
+                        print(f"model built: {model_rfc}")
                         
-                        logged_model = mlflow.sklearn.log_model(
-                              sk_model=model_svc,
+                        mlflow.sklearn.log_model(
+                              sk_model=model_rfc,
                               artifact_path="model",
-                              registered_model_name="",
+                              registered_model_name="RFCSpamModel",
                               skops_trusted_types=[
                                     "scipy.sparse._csr.csr_matrix"
                               ]

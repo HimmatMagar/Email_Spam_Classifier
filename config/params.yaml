@@ -1,4 +1,4 @@
-SVC:
-  C: 1.3395
-  kernel: "rbf"
-  gamma: "scale"
+RFC:
+  n_estimators: 30
+  min_samples_split: 10
+  min_samples_leaf: 2

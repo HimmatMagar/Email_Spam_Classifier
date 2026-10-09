@@ -36,3 +36,132 @@ stages:
       hash: md5
       md5: c5aff53158692e0817a3632881347e7b
       size: 23
+  data_transformation:
+    cmd: python src/emailClassifier/pipeline/data_transform_pipeline.py
+    deps:
+    - path: config/config.yaml
+      hash: md5
+      md5: 3f7dddeab3ae2abf61cdc92ca1f5afda
+      size: 1084
+    - path: output/data_ingestion/combined_data.csv
+      hash: md5
+      md5: 544e3dc00840bac4ea1aa8c7ca744f13
+      size: 139910068
+    - path: src/emailClassifier/components/data_transformation.py
+      hash: md5
+      md5: 2d21563abdd97a241bc32231e157a9da
+      size: 2340
+    outs:
+    - path: output/data_transformation/vectorizer.pkl
+      hash: md5
+      md5: 16f7a60f07a0427377e0fd3e0c218647
+      size: 44307
+    - path: output/data_transformation/x_test.pkl
+      hash: md5
+      md5: b5bf5b29e0212d2c20d68924ee0bc061
+      size: 4126755
+    - path: output/data_transformation/x_train.pkl
+      hash: md5
+      md5: 99d6dbd4b8a0450227d523dd8ceff5e2
+      size: 32930467
+    - path: output/data_transformation/x_val.pkl
+      hash: md5
+      md5: 0f05962bd40abe9ad5c53858b65194c7
+      size: 4111803
+    - path: output/data_transformation/y_test.pkl
+      hash: md5
+      md5: a55f02c9bdd4aec56c0328bfe2b679b4
+      size: 267848
+    - path: output/data_transformation/y_train.pkl
+      hash: md5
+      md5: d7b6d7d5319e5e06512ab14197cb8e56
+      size: 2137074
+    - path: output/data_transformation/y_val.pkl
+      hash: md5
+      md5: 09b28a4e652270fc614e63132691635b
+      size: 267848
+  model_building:
+    cmd: python src/emailClassifier/pipeline/model_build_pipeline.py
+    deps:
+    - path: config/config.yaml
+      hash: md5
+      md5: 3f7dddeab3ae2abf61cdc92ca1f5afda
+      size: 1084
+    - path: output/data_transformation/x_train.pkl
+      hash: md5
+      md5: 99d6dbd4b8a0450227d523dd8ceff5e2
+      size: 32930467
+    - path: output/data_transformation/y_train.pkl
+      hash: md5
+      md5: d7b6d7d5319e5e06512ab14197cb8e56
+      size: 2137074
+    - path: src/emailClassifier/components/model_build.py
+      hash: md5
+      md5: 202f6fd699b21d99c966baace6d2b552
+      size: 1111
+    params:
+      config/params.yaml:
+        RFC.min_samples_leaf: 2
+        RFC.min_samples_split: 10
+        RFC.n_estimators: 30
+    outs:
+    - path: output/build_model/model.pkl
+      hash: md5
+      md5: b2fd5c552f06ed2b147dce293c308d2e
+      size: 9736889
+    - path: output/run_id.txt
+      hash: md5
+      md5: bc30da1c644c2a60f18e01e63f6e0072
+      size: 32
+  model_evaluation:
+    cmd: python src/emailClassifier/pipeline/model_eval_pipeline.py
+    deps:
+    - path: config/config.yaml
+      hash: md5
+      md5: 3f7dddeab3ae2abf61cdc92ca1f5afda
+      size: 1084
+    - path: output/build_model/model.pkl
+      hash: md5
+      md5: b2fd5c552f06ed2b147dce293c308d2e
+      size: 9736889
+    - path: output/data_transformation/x_val.pkl
+      hash: md5
+      md5: 0f05962bd40abe9ad5c53858b65194c7
+      size: 4111803
+    - path: output/data_transformation/y_val.pkl
+      hash: md5
+      md5: 09b28a4e652270fc614e63132691635b
+      size: 267848
+    - path: src/emailClassifier/components/mode_eval.py
+      hash: md5
+      md5: d58b0c05f46400bd1c8887d5be7dcdab
+      size: 1159
+    outs:
+    - path: output/model_evaluation/mertic.json
+      hash: md5
+      md5: 134ebe9d52221857c14a48c356602b04
+      size: 139
+  model_promotion:
+    cmd: uv run src/emailClassifier/pipeline/model_promotion_pipeline.py
+    deps:
+    - path: config/config.yaml
+      hash: md5
+      md5: 3f7dddeab3ae2abf61cdc92ca1f5afda
+      size: 1084
+    - path: output/data_transformation/x_test.pkl
+      hash: md5
+      md5: b5bf5b29e0212d2c20d68924ee0bc061
+      size: 4126755
+    - path: output/data_transformation/y_test.pkl
+      hash: md5
+      md5: a55f02c9bdd4aec56c0328bfe2b679b4
+      size: 267848
+    - path: src/emailClassifier/components/model_promotion.py
+      hash: md5
+      md5: 457950aa691a3e4d29997ce2d5c9fc57
+      size: 3316
+    outs:
+    - path: output/model_name.txt
+      hash: md5
+      md5: 1418fe4937d9a90c4fd971e54eb2a634
+      size: 19

@@ -29,9 +29,9 @@ class ModelBuilingConfig:
       xtrain_data: Path
       ytrain_data: Path
       model: str
-      C: float
-      kernel: str
-      gamma: str
+      n_estimators: int
+      min_samples_split: int
+      min_samples_leaf: int
 
 
 @dataclass(frozen=True)

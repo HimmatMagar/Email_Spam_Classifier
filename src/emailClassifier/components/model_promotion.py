@@ -6,6 +6,7 @@ from emailClassifier.utils import load_file
 from mlflow.exceptions import MlflowException
 from emailClassifier.entity import ModelPromoteConfig
 from sklearn.metrics import precision_score, f1_score, recall_score
+from emailClassifier.utils.mlflow_manager import configure_mlflow, load_run_id
 
 
 
@@ -13,7 +14,7 @@ class ModelPromotion:
     def __init__(self, chall_name, champ_name, chall_alias, champ_alias, config: ModelPromoteConfig):
         self.chall_name = chall_name
         self.champ_name = champ_name
-        self.chall_alies = chall_alias
+        self.chall_alias = chall_alias
         self.champ_alias = champ_alias
         self.config = config
         self.client = MlflowClient()
@@ -28,7 +29,7 @@ class ModelPromotion:
     def _evaluate(self, name, alias):
         x_test, y_test = self._load_test_file()
         model = mlflow.pyfunc.load_model(f"models:/{name}@{alias}")
-        loger.info(f"{self.alies} model loaded successfully from mlflow registry!!")
+        loger.info(f"{alias} model loaded successfully from mlflow registry!!")
         p = model.predict(x_test)
         return {
             "precision": precision_score(y_test, p),
@@ -38,6 +39,7 @@ class ModelPromotion:
 
 
     def _select_champion_model(self):
+        model_promotion = self.champ_name
         chall = self._evaluate(
             name=self.chall_name,
             alias=self.chall_alias
@@ -69,6 +71,7 @@ class ModelPromotion:
                 self.client.set_registered_model_alias(self.champ_name, "previous", old_champ)
             self.client.set_registered_model_alias(self.chall_name, "champion", v)
             self.client.set_model_version_tag(self.chall_name, v, "validation", "Promoted")
+            model_promotion = self.chall_name
             print(f"v: {v} promoted to champion")
             loger.info(f"v: %s promoted to champion", v)
         else:
@@ -77,3 +80,5 @@ class ModelPromotion:
             self.client.set_model_version_tag(self.chall_name, v, "validation", "rejected")
             print(f"v: {v} rejected, champion unchanged")
             loger.info("v: %s rejected, champion unchanged", v)
+
+        return model_promotion

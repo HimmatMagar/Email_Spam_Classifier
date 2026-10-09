@@ -2,13 +2,30 @@
 __pycache__/
 *.py[codz]
 *$py.class
+.ipynb_checkpoints/
 
 # C extensions
 *.so
 
 output/*
 
-.dvcignore
+# ML & Data Artifacts
+mlflow.db
+*.pkl
+*.h5
+*.joblib
+
+# DVC internal
+.dvc/
+
+# Logs
+*.log
+logging/
+
+# OS / IDE
+.DS_Store
+.vscode/
+.idea/
 
 # Distribution / packaging
 .Python

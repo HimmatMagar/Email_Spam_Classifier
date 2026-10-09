@@ -57,16 +57,16 @@ class ConfigurationManager:
             config = self.config.model_building
 
             create_dir([config.root_dir])
-            params = self.params.SVC
+            params = self.params.RFC
 
             model_building_config = ModelBuilingConfig(
                   root_dir = config.root_dir,
                   xtrain_data = config.xtrain_data,
                   ytrain_data = config.ytrain_data,
                   model = config.model,
-                  C = params.C,
-                  kernel = params.kernel,
-                  gamma = params.gamma
+                  n_estimators = params.n_estimators,
+                  min_samples_split = params.min_samples_split,
+                  min_samples_leaf = params.min_samples_leaf
             )
 
             return model_building_config
@@ -88,7 +88,7 @@ class ConfigurationManager:
 
       def get_model_promote_config(self) -> ModelPromoteConfig:
             config = self.config.model_promotion
-            create_dir(config.root_dir)
+            create_dir([config.root_dir])
 
             return ModelPromoteConfig(
                   root_dir=config.root_dir,

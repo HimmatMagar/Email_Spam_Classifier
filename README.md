@@ -6,7 +6,7 @@
 ![uv](https://img.shields.io/badge/package%20manager-uv-purple)
 ![License](https://img.shields.io/badge/license-educational-lightgrey)
 
-An end-to-end machine learning application that classifies emails as **Spam** or **Not Spam**. It uses text preprocessing, TF-IDF vectorization, and a trained classification model, served through a **FastAPI** backend and an interactive **HTML** frontend. The project includes a modular training pipeline, **model promotion** (only better models reach production), automated **tests**, **CI with GitHub Actions**, and **Docker / Docker Compose** support.
+An end-to-end machine learning application that classifies emails as **Spam** or **Not Spam**. It uses text preprocessing, TF-IDF vectorization, and a trained classification model, served through a **FastAPI** backend and an interactive **HTML** frontend. The project includes a modular training pipeline, **model promotion** (only better models reach production), automated **tests**, **CI with GitHub Actions**, and **Docker** support.
 
 
 ## Features

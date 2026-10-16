@@ -94,13 +94,6 @@ Email_Spam_Classifier/
 
 ## Getting Started
 
-### Prerequisites
-
-- [Conda](https://docs.conda.io/) (Miniconda or Anaconda)
-- Python 3.12
-- Git
-- (Optional) Docker and Docker Compose
-
 ### Installation
 
 1. **Clone the repository**
@@ -109,19 +102,9 @@ Email_Spam_Classifier/
    cd Email_Spam_Classifier
    ```
 
-2. **Create the conda environment**
+2. **Create environment and Install dependencies**
    ```bash
-   conda create -p env python==3.12 -y
-   ```
-
-3. **Activate the environment**
-   ```bash
-   conda activate env/
-   ```
-
-4. **Install dependencies**
-   ```bash
-   pip install -r requirements.txt
+   uv sync
    ```
 
 ---
